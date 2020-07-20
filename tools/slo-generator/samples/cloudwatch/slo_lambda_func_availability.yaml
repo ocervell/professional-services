@@ -1,0 +1,26 @@
+---
+service_name:     aws
+feature_name:     lambda
+slo_description:  Availability of AWS Lambda Function
+slo_name:         availability
+slo_target:       0.95
+backend:
+  class:          Cloudwatch
+  method:         good_bad_ratio
+  measurement:
+    query_good:
+      namespace: AWS/Lambda
+      name: Errors
+      dimensions:
+        - Name: X1
+          Value: Y1
+        - Name: X2
+          Value: Y2
+    query_valid:
+      namespace: AWS/Lambda
+      name: Invocations
+      dimensions:
+        - Name: X1
+          Value: Y1
+        - Name: X2
+          Value: Y2
