@@ -117,6 +117,12 @@ def parse_args(args):
                                  help='Fields to keep in response.',
                                  required=False,
                                  default=[])
+    metrics_inspect.add_argument('--graph',
+                                 '-g',
+                                 required=False,
+                                 default=False,
+                                 action='store_true')
+
     metrics_list.add_argument('--fields',
                               '-f',
                               type=str,
@@ -277,6 +283,7 @@ def cli(parsers, args):
     fields = parse_fields(fields)
     filters = getattr(args, 'filters', [])
     filters = parse_filters(filters)
+    graph = getattr(args, 'graph', False)
     response = None
 
     if parser == 'metrics':
@@ -294,7 +301,7 @@ def cli(parsers, args):
             response = method(pattern=args.regex, fields=fields)
 
         elif command in ['inspect']:
-            response = method(metric_type, window=args.window)
+            response = method(metric_type, window=args.window, graph=graph)
 
         elif command in ['delete_unused']:
             response = method(pattern=args.regex, window=args.window)

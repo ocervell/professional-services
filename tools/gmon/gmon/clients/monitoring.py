@@ -23,7 +23,7 @@ import time
 from google.cloud.monitoring_v3 import (MetricServiceClient, enums, types)
 from google.api_core import exceptions
 
-from .utils import decorate_with, to_json
+from .utils import decorate_with, to_json, plot_timeseries
 
 LOGGER = logging.getLogger(__name__)
 
@@ -211,13 +211,14 @@ class MetricsClient:
                     self.delete(metric_type)
             LOGGER.info('Metrics deleted successfully.')
 
-    def inspect(self, metric_type, window):
+    def inspect(self, metric_type, window, graph):
         """Inspect a specific metric. Returns timeseries beteween now and
         300 seconds before.
 
         Args:
             metric_type (str): Metric type.
-            window: Window (in seconds).
+            window (str): Window (in seconds).
+            graph (bool): Graph timeseries with Matplotlib.
 
         Returns:
             list: List of timeseries.
@@ -240,6 +241,8 @@ class MetricsClient:
             self.client.list_time_series(
                 self.project, 'metric.type = "%s"' % metric_type, interval,
                 enums.ListTimeSeriesRequest.TimeSeriesView.FULL))
+        if graph:
+            plot_timeseries(results)
         return results
 
     def switch_project(self, new_project_id):
