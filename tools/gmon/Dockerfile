@@ -20,8 +20,12 @@ RUN apt-get update && apt-get install -y \
     unzip \
     curl \
     python3 \
+    python3-setuptools \
     python3-pip \
   && rm -rf /var/lib/apt/lists/*
+
+# Downloading gcloud package
+RUN curl https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > /tmp/google-cloud-sdk.tar.gz
 
 # Install gcloud SDK
 RUN mkdir -p /usr/local/gcloud \
@@ -32,7 +36,10 @@ RUN mkdir -p /usr/local/gcloud \
 ENV PATH $PATH:/usr/local/gcloud/google-cloud-sdk/bin
 
 # Install gmon
-RUN pip3 install gmon
+ADD . /app
+WORKDIR /app
+RUN pip3 install -U setuptools
+RUN python3 setup.py install
 
 # Run script
 ENTRYPOINT [ "gmon" ]
