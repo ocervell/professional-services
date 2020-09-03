@@ -15,9 +15,9 @@
 
 NAME = "gmon"
 
-PIP=pip
+PIP=pip3
 
-PYTHON=python
+PYTHON=python3
 TWINE=twine
 COVERAGE=coverage
 NOSE_OPTS = --with-coverage --cover-package=$(NAME)
@@ -52,6 +52,11 @@ clean:
 	rm -rf docs/client_modules
 	@echo "Cleaning up test reports"
 	rm -rf report/*
+
+info:
+	$(PYTHON) --version
+	$(PIP) --version
+	flake8 --version
 
 build: clean
 	$(PYTHON) setup.py sdist bdist_wheel

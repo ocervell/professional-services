@@ -1,9 +1,13 @@
 ---
 steps:
-  - id: install
-    name: python3
-    args: ["python3", "setup.py", "install"]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/gmon', '.' ]
 
   - id: test
-    name: gcr.io/$PROJECT_ID/make
-    args: []
+    name: gcr.io/$PROJECT_ID/gmon
+    entrypoint: make
+    args:
+      - install
+      - install_test
+      - info
+      - tests

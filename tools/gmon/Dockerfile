@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 # Install prereqs
 RUN apt-get update && apt-get install -y \
@@ -23,6 +23,8 @@ RUN apt-get update && apt-get install -y \
     python3-setuptools \
     python3-pip \
   && rm -rf /var/lib/apt/lists/*
+
+RUN pip3 install --upgrade pip setuptools pylint
 
 # Downloading gcloud package
 RUN curl https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > /tmp/google-cloud-sdk.tar.gz
