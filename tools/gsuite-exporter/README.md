@@ -52,11 +52,11 @@ The **GSuite Exporter** can be used either using the command-line interface or a
 An example sync from the Admin Reports API to Stackdriver Logging for the 'login' application looks like:
 ```sh
 gsuite-exporter
-  --credentials-path='/path/to/service/account/credentials.json'
-  --admin-user='<your_gsuite_admin>@<your_domain>'
-  --api='report_v1'
-  --applications='login drive token'
-  --project-id='<logging_project>'
+  --credentials-path='/path/to/service/account/credentials.json' \
+  --admin-user='<your_gsuite_admin>@<your_domain>' \
+  --api='report_v1' \
+  --applications login drive token \
+  --project-id='<logging_project>' \
   --exporter='stackdriver_exporter.StackdriverExporter'
 ```
 
